@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="eu">
+<head>
+<meta charset="UTF-8" />
+<title>Itsas Hondoan Hitzak</title>
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  height: 100vh;
+  background: linear-gradient(to bottom, #6ec6ff, #01579b);
+  font-family: 'Arial', sans-serif;
+  color: white;
+  position: relative;
+}
+.palabra {
+  position: absolute;
+  font-size: 2.5em;
+  opacity: 0.9;
+  animation: flotar 25s infinite ease-in-out;
+  white-space: nowrap;
+  transition: transform 0.3s ease, text-shadow 0.3s ease, opacity 0.3s ease;
+  cursor: pointer;
+}
+.palabra:hover, .palabra.touch {
+  transform: scale(1.3) rotate(5deg);
+  opacity: 1;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.9), 0 0 24px rgba(173, 216, 230, 0.7);
+}
+@keyframes flotar {
+  0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+  50% { transform: translateY(50vh) translateX(30px); opacity: 1; }
+  100% { transform: translateY(-10vh) translateX(-30px); opacity: 0; }
+}
+.burbuja {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  animation: subir 12s infinite ease-in;
+}
+@keyframes subir {
+  0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+  50% { opacity: 0.5; }
+  100% { transform: translateY(-10vh) scale(1.3); opacity: 0; }
+}
+.decoracion {
+  position: absolute;
+  pointer-events: none;
+}
+.alga {
+  width: 40px;
+  height: 200px;
+  background: green;
+  border-radius: 40% 40% 10% 10%;
+  opacity: 0.4;
+  animation: oscilar 4s infinite ease-in-out alternate;
+}
+@keyframes oscilar {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(5deg); }
+}
+img.icono {
+  position: absolute;
+  width: 60px;
+  animation: nadar 20s infinite linear;
+}
+@keyframes nadar {
+  0% { transform: translateX(-100px); }
+  100% { transform: translateX(110vw); }
+}
+#sonidoBtn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid white;
+  padding: 8px 12px;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 8px;
+  z-index: 100;
+}
+</style>
+</head>
+<body>
+<button id="sonidoBtn">🔊 Aktibatu soinuak</button>
+
+<!-- Palabras flotantes -->
+<span class="palabra" style="left: 5%; animation-delay: 0s;">dut</span>
+<span class="palabra" style="left: 15%; animation-delay: 2s;">egingo</span>
+<span class="palabra" style="left: 25%; animation-delay: 4s;">dagizut</span>
+<span class="palabra" style="left: 35%; animation-delay: 1s;">ez</span>
+<span class="palabra" style="left: 45%; animation-delay: 3s;">barre</span>
+<span class="palabra" style="left: 55%; animation-delay: 5s;">zin</span>
+<span class="palabra" style="left: 65%; animation-delay: 6s;">heldu</span>
+<span class="palabra" style="left: 75%; animation-delay: 7s;">whatsapp</span>
+<span class="palabra" style="left: 85%; animation-delay: 8s;">zitzaiadan</span>
+<span class="palabra" style="left: 10%; animation-delay: 9s;">nekatuta</span>
+<span class="palabra" style="left: 20%; animation-delay: 10s;">ondo</span>
+<span class="palabra" style="left: 30%; animation-delay: 11s;">apur</span>
+<span class="palabra" style="left: 40%; animation-delay: 12s;">nago</span>
+<span class="palabra" style="left: 50%; animation-delay: 13s;">bat</span>
+<span class="palabra" style="left: 60%; animation-delay: 14s;">bakarrik</span>
+<span class="palabra" style="left: 70%; animation-delay: 15s;">heltzen</span>
+<span class="palabra" style="left: 80%; animation-delay: 16s;">naiz</span>
+<span class="palabra" style="left: 90%; animation-delay: 17s;">ari</span>
+<span class="palabra" style="left: 10%; animation-delay: 18s;">bidean</span>
+
+<audio id="audioMar" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_44e4c58b58.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const burbujak = 60;
+for (let i = 0; i < burbujak; i++) {
+  const b = document.createElement('div');
+  b.className = 'burbuja';
+  b.style.left = Math.random() * 100 + 'vw';
+  const size = Math.random() * 10 + 5;
+  b.style.width = size + 'px';
+  b.style.height = size + 'px';
+  b.style.animationDuration = (10 + Math.random() * 5) + 's';
+  b.style.animationDelay = Math.random() * 15 + 's';
+  document.body.appendChild(b);
+}
+document.querySelectorAll('.palabra').forEach(h => {
+  h.addEventListener('touchstart', () => h.classList.add('touch'));
+  h.addEventListener('touchend', () => setTimeout(() => h.classList.remove('touch'), 500));
+});
+[
+  { class: 'alga', top: '70%', left: '5%' },
+  { class: 'alga', top: '72%', left: '20%' },
+  { class: 'alga', top: '75%', left: '80%' }
+].forEach(d => {
+  const e = document.createElement('div');
+  e.className = 'decoracion ' + d.class;
+  e.style.top = d.top;
+  e.style.left = d.left;
+  document.body.appendChild(e);
+});
+[
+  { src: 'https://cdn-icons-png.flaticon.com/512/616/616408.png', top: '40%' },
+  { src: 'https://cdn-icons-png.flaticon.com/512/616/616408.png', top: '60%' },
+  { src: 'https://cdn-icons-png.flaticon.com/512/616/616408.png', top: '80%' },
+  { src: 'https://cdn-icons-png.flaticon.com/512/616/616408.png', top: '30%' }
+].forEach(d => {
+  const img = document.createElement('img');
+  img.src = d.src;
+  img.className = 'icono';
+  img.style.top = d.top;
+  img.style.left = '0%';
+  document.body.appendChild(img);
+});
+document.getElementById('sonidoBtn').addEventListener('click', () => {
+  document.getElementById('audioMar').play();
+});
+</script>
+</body>
+</html>
