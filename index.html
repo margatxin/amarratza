@@ -81,12 +81,24 @@ img.icono {
   border-radius: 8px;
   z-index: 100;
 }
+#avisoAudio {
+  position: absolute;
+  top: 50px;
+  left: 10px;
+  background: rgba(255, 0, 0, 0.2);
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: white;
+  font-size: 0.9em;
+  display: none;
+}
 </style>
 </head>
 <body>
 <button id="sonidoBtn">🔊 Aktibatu soinuak</button>
+<div id="avisoAudio">❗ Ezin da soinua aktibatu</div>
 
-<!-- Palabras flotantes -->
+<!-- Palabras -->
 <span class="palabra" style="left: 5%; animation-delay: 0s;">dut</span>
 <span class="palabra" style="left: 15%; animation-delay: 2s;">egingo</span>
 <span class="palabra" style="left: 25%; animation-delay: 4s;">dagizut</span>
@@ -108,12 +120,12 @@ img.icono {
 <span class="palabra" style="left: 10%; animation-delay: 18s;">bidean</span>
 
 <audio id="audioMar" loop>
-  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_44e4c58b58.mp3" type="audio/mpeg">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_44e4c58b58.mp3?filename=ocean-waves-ambient-110166.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-const burbujak = 60;
-for (let i = 0; i < burbujak; i++) {
+// Burbujas con tamaños variados
+for (let i = 0; i < 60; i++) {
   const b = document.createElement('div');
   b.className = 'burbuja';
   b.style.left = Math.random() * 100 + 'vw';
@@ -124,10 +136,14 @@ for (let i = 0; i < burbujak; i++) {
   b.style.animationDelay = Math.random() * 15 + 's';
   document.body.appendChild(b);
 }
+
+// Palabras: efecto táctil
 document.querySelectorAll('.palabra').forEach(h => {
   h.addEventListener('touchstart', () => h.classList.add('touch'));
   h.addEventListener('touchend', () => setTimeout(() => h.classList.remove('touch'), 500));
 });
+
+// Algas decorativas
 [
   { class: 'alga', top: '70%', left: '5%' },
   { class: 'alga', top: '72%', left: '20%' },
@@ -139,11 +155,12 @@ document.querySelectorAll('.palabra').forEach(h => {
   e.style.left = d.left;
   document.body.appendChild(e);
 });
+
+// Imágenes: pulpo, pez, buceador
 [
-  { src: 'https://cdn-icons-png.flaticon.com/512/616/616408.png', top: '40%' },
-  { src: 'https://cdn-icons-png.flaticon.com/512/616/616408.png', top: '60%' },
-  { src: 'https://cdn-icons-png.flaticon.com/512/616/616408.png', top: '80%' },
-  { src: 'https://cdn-icons-png.flaticon.com/512/616/616408.png', top: '30%' }
+  { src: 'https://cdn-icons-png.flaticon.com/512/2205/2205310.png', top: '40%' }, // pulpo
+  { src: 'https://cdn-icons-png.flaticon.com/512/616/616408.png', top: '60%' },   // pez
+  { src: 'https://cdn-icons-png.flaticon.com/512/2202/2202112.png', top: '80%' }  // buceador
 ].forEach(d => {
   const img = document.createElement('img');
   img.src = d.src;
@@ -152,8 +169,13 @@ document.querySelectorAll('.palabra').forEach(h => {
   img.style.left = '0%';
   document.body.appendChild(img);
 });
+
+// Activar audio al hacer clic
 document.getElementById('sonidoBtn').addEventListener('click', () => {
-  document.getElementById('audioMar').play();
+  const audio = document.getElementById('audioMar');
+  audio.play().catch(() => {
+    document.getElementById('avisoAudio').style.display = 'block';
+  });
 });
 </script>
 </body>
